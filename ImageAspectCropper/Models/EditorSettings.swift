@@ -53,9 +53,14 @@ final class EditorSettings {
     var directoryPath: String { didSet { persist() } }
 
     var aspectRatio: Double { ratioWidth / ratioHeight }
-    var outputWidth: Int { dimensionIsWidth ? dimension : max(1, Int((Double(dimension) * aspectRatio).rounded())) }
-    var outputHeight: Int { dimensionIsWidth ? max(1, Int((Double(dimension) / aspectRatio).rounded())) : dimension }
-    var validOutput: Bool { outputWidth <= 16384 && outputHeight <= 16384 && outputWidth * outputHeight <= 100_000_000 }
+    // Round the linked axis to the nearest even pixel; ties round upward.
+    var outputWidth: Int { dimensionIsWidth ? dimension : max(2, Int((Double(dimension) * aspectRatio / 2).rounded()) * 2) }
+    var outputHeight: Int { dimensionIsWidth ? max(2, Int((Double(dimension) / aspectRatio / 2).rounded()) * 2) : dimension }
+    var validOutput: Bool {
+        outputWidth >= 2 && outputHeight >= 2 &&
+        outputWidth.isMultiple(of: 2) && outputHeight.isMultiple(of: 2) &&
+        outputWidth <= 16384 && outputHeight <= 16384 && outputWidth * outputHeight <= 100_000_000
+    }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -68,7 +73,8 @@ final class EditorSettings {
         ratioWidth = width.isFinite ? min(1000, max(1, width)) : 1
         ratioHeight = height.isFinite ? min(1000, max(1, height)) : 1
         dimensionIsWidth = values["dimensionIsWidth"] as? Bool ?? true
-        dimension = min(16384, max(1, values["dimension"] as? Int ?? 1920))
+        let savedDimension = min(16384, max(2, values["dimension"] as? Int ?? 1920))
+        dimension = savedDimension + savedDimension % 2
         format = ExportFormat(rawValue: values["format"] as? String ?? "") ?? .jpeg
         let savedQuality = values["quality"] as? Double ?? 0.9
         quality = savedQuality.isFinite ? min(1, max(0.01, savedQuality)) : 0.9

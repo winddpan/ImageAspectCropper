@@ -2,6 +2,8 @@ import SwiftUI
 
 struct InspectorView: View {
     @Bindable var model: EditorViewModel
+    @State private var widthInput = ""
+    @State private var heightInput = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -53,6 +55,12 @@ struct InspectorView: View {
             .padding(20)
         }
         .background(.regularMaterial)
+        .onChange(of: model.settings.outputWidth, initial: true) {
+            widthInput = String(model.settings.outputWidth)
+        }
+        .onChange(of: model.settings.outputHeight, initial: true) {
+            heightInput = String(model.settings.outputHeight)
+        }
     }
 
     private var aspectSection: some View {
@@ -98,13 +106,17 @@ struct InspectorView: View {
             HStack(spacing: 10) {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Width").font(.system(size: 11)).foregroundStyle(.secondary)
-                    TextField("Width", value: Binding(get: { model.settings.outputWidth }, set: { model.setDimension($0, isWidth: true) }), format: .number.grouping(.never))
+                    TextField("Width", text: $widthInput, onEditingChanged: { editing in
+                        if !editing { commitDimension(isWidth: true) }
+                    }, onCommit: { commitDimension(isWidth: true) })
                         .accessibilityLabel("Output Width")
                 }
                 Image(systemName: "link").font(.system(size: 11)).foregroundStyle(.secondary).padding(.top, 18)
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Height").font(.system(size: 11)).foregroundStyle(.secondary)
-                    TextField("Height", value: Binding(get: { model.settings.outputHeight }, set: { model.setDimension($0, isWidth: false) }), format: .number.grouping(.never))
+                    TextField("Height", text: $heightInput, onEditingChanged: { editing in
+                        if !editing { commitDimension(isWidth: false) }
+                    }, onCommit: { commitDimension(isWidth: false) })
                         .accessibilityLabel("Output Height")
                 }
             }
@@ -117,6 +129,16 @@ struct InspectorView: View {
                     .font(.system(size: 11)).foregroundStyle(.secondary)
             }
         }
+    }
+
+    private func commitDimension(isWidth: Bool) {
+        let input = isWidth ? widthInput : heightInput
+        if let value = Int(input.trimmingCharacters(in: .whitespacesAndNewlines)),
+           value != (isWidth ? model.settings.outputWidth : model.settings.outputHeight) {
+            model.setDimension(value, isWidth: isWidth)
+        }
+        widthInput = String(model.settings.outputWidth)
+        heightInput = String(model.settings.outputHeight)
     }
 
     private var formatSection: some View {

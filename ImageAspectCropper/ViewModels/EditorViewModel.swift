@@ -117,7 +117,11 @@ final class EditorViewModel {
     }
 
     func setDimension(_ value: Int, isWidth: Bool) {
-        guard (1...16384).contains(value) else { return }
+        guard value.isMultiple(of: 2) else {
+            errorMessage = String(localized: "Output width and height must both be even numbers. The previous resolution has been restored.")
+            return
+        }
+        guard (2...16384).contains(value) else { return }
         settings.dimensionIsWidth = isWidth
         settings.dimension = value
         exportedURL = nil

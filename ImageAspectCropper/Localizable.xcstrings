@@ -1,6 +1,28 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Output width and height must both be even numbers. The previous resolution has been restored.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Output width and height must both be even numbers. The previous resolution has been restored."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输出宽度和高度都必须为偶数，已恢复之前的分辨率。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "輸出寬度和高度都必須為偶數，已恢復先前的解析度。"
+          }
+        }
+      }
+    },
     "": {
       "shouldTranslate": false
     },

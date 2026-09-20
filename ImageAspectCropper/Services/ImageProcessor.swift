@@ -52,7 +52,8 @@ nonisolated enum ImageProcessor {
     @concurrent static func encode(source: CGImage, crop: CGRect, width: Int, height: Int,
                                    format: ExportFormat, quality: Double) async throws -> Data {
         try Task.checkCancellation()
-        guard width > 0, height > 0, width <= 16384, height <= 16384,
+        guard width >= 2, height >= 2, width.isMultiple(of: 2), height.isMultiple(of: 2),
+              width <= 16384, height <= 16384,
               width * height <= 100_000_000,
               let cropped = source.cropping(to: crop.integral.intersection(CGRect(x: 0, y: 0, width: source.width, height: source.height))) else {
             throw ImageProcessingError.invalidCrop
