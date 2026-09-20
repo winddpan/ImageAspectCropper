@@ -6,8 +6,19 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		F10000000000000000000006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4E2A0F7305FCB3D00D460FB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4E2A0FE305FCB3D00D460FB;
+			remoteInfo = ImageAspectCropper;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		E4E2A0FF305FCB3D00D460FB /* ImageAspectCropper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageAspectCropper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F10000000000000000000001 /* ImageAspectCropperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ImageAspectCropperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,20 @@
 			path = ImageAspectCropper;
 			sourceTree = "<group>";
 		};
+		F10000000000000000000002 /* ImageAspectCropperTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ImageAspectCropperTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E4E2A0FC305FCB3D00D460FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		F10000000000000000000004 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
 			);
@@ -31,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				E4E2A101305FCB3D00D460FB /* ImageAspectCropper */,
+				F10000000000000000000002 /* ImageAspectCropperTests */,
 				E4E2A100305FCB3D00D460FB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				E4E2A0FF305FCB3D00D460FB /* ImageAspectCropper.app */,
+				F10000000000000000000001 /* ImageAspectCropperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,6 +87,27 @@
 			productReference = E4E2A0FF305FCB3D00D460FB /* ImageAspectCropper.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F10000000000000000000008 /* ImageAspectCropperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F10000000000000000000009 /* Build configuration list for PBXNativeTarget "ImageAspectCropperTests" */;
+			buildPhases = (
+				F10000000000000000000003 /* Sources */,
+				F10000000000000000000004 /* Frameworks */,
+				F10000000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F10000000000000000000007 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F10000000000000000000002 /* ImageAspectCropperTests */,
+			);
+			name = ImageAspectCropperTests;
+			productName = ImageAspectCropperTests;
+			productReference = F10000000000000000000001 /* ImageAspectCropperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -85,6 +129,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = E4E2A0F6305FCB3D00D460FB;
 			minimizedProjectReferenceProxies = 1;
@@ -94,12 +140,18 @@
 			projectRoot = "";
 			targets = (
 				E4E2A0FE305FCB3D00D460FB /* ImageAspectCropper */,
+				F10000000000000000000008 /* ImageAspectCropperTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E4E2A0FD305FCB3D00D460FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		F10000000000000000000005 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -112,7 +164,20 @@
 			files = (
 			);
 		};
+		F10000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F10000000000000000000007 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4E2A0FE305FCB3D00D460FB /* ImageAspectCropper */;
+			targetProxy = F10000000000000000000006 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E4E2A108305FCB3E00D460FB /* Debug configuration for PBXProject "ImageAspectCropper" */ = {
@@ -175,6 +240,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -232,6 +298,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -240,6 +307,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = ImageAspectCropper/ImageAspectCropper.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -247,13 +316,15 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = RatioCrop;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrapper.ImageAspectCropper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -263,7 +334,7 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -272,6 +343,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = ImageAspectCropper/ImageAspectCropper.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -279,13 +352,15 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = RatioCrop;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrapper.ImageAspectCropper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -295,7 +370,35 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		F1000000000000000000000A /* Debug configuration for PBXNativeTarget "ImageAspectCropperTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y457P5Q8XM;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wrapper.ImageAspectCropperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageAspectCropper.app/Contents/MacOS/ImageAspectCropper";
+			};
+			name = Debug;
+		};
+		F1000000000000000000000B /* Release configuration for PBXNativeTarget "ImageAspectCropperTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y457P5Q8XM;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wrapper.ImageAspectCropperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageAspectCropper.app/Contents/MacOS/ImageAspectCropper";
 			};
 			name = Release;
 		};
@@ -315,6 +418,14 @@
 			buildConfigurations = (
 				E4E2A10B305FCB3E00D460FB /* Debug configuration for PBXNativeTarget "ImageAspectCropper" */,
 				E4E2A10C305FCB3E00D460FB /* Release configuration for PBXNativeTarget "ImageAspectCropper" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		F10000000000000000000009 /* Build configuration list for PBXNativeTarget "ImageAspectCropperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1000000000000000000000A /* Debug configuration for PBXNativeTarget "ImageAspectCropperTests" */,
+				F1000000000000000000000B /* Release configuration for PBXNativeTarget "ImageAspectCropperTests" */,
 			);
 			defaultConfigurationName = Release;
 		};
