@@ -52,7 +52,7 @@ final class EditorViewModel {
         panel.canChooseFiles = true
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
-        panel.prompt = "打开图片"
+        panel.prompt = String(localized: "Open Image")
         guard let window = NSApp.keyWindow else { return }
         panel.beginSheetModal(for: window) { [weak self] response in
             if response == .OK, let url = panel.url { self?.load(url) }
@@ -62,7 +62,7 @@ final class EditorViewModel {
     @discardableResult func load(_ url: URL) -> Task<Void, Never> {
         loadTask?.cancel()
         isLoading = true
-        status = "正在打开 \(url.lastPathComponent)"
+        status = String(localized: "Opening \(url.lastPathComponent)")
         let task = Task { [weak self] in
             do {
                 let image = try await ImageProcessor.load(url: url)
@@ -136,7 +136,7 @@ final class EditorViewModel {
 
     func finishSelectionChange(from oldRect: CGRect) {
         guard oldRect != selection else { return }
-        registerUndo(selection: oldRect, confirmed: nil, name: "调整选区")
+        registerUndo(selection: oldRect, confirmed: nil, name: String(localized: "Adjust Selection"))
         exportedURL = nil
         status = ""
     }
@@ -161,16 +161,16 @@ final class EditorViewModel {
     func confirmCrop() {
         guard canConfirm, let image = source?.pixels,
               let cropped = image.cropping(to: selection.integral) else { return }
-        registerUndo(selection: selection, confirmed: nil, name: "裁剪")
+        registerUndo(selection: selection, confirmed: nil, name: String(localized: "Crop"))
         confirmedCrop = selection
         preview = cropped
-        status = "选区已确认"
+        status = String(localized: "Selection Confirmed")
         fit()
     }
 
     func editCrop() {
         guard confirmedCrop != nil else { return }
-        registerUndo(selection: selection, confirmed: confirmedCrop, name: "重新编辑选区")
+        registerUndo(selection: selection, confirmed: confirmedCrop, name: String(localized: "Edit Selection"))
         confirmedCrop = nil
         preview = nil
         status = ""
@@ -194,7 +194,7 @@ final class EditorViewModel {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.canCreateDirectories = true
-        panel.prompt = "选择导出目录"
+        panel.prompt = String(localized: "Choose Export Folder")
         if !settings.directoryPath.isEmpty { panel.directoryURL = URL(fileURLWithPath: settings.directoryPath) }
         guard let window = NSApp.keyWindow else { return }
         panel.beginSheetModal(for: window) { [weak self] response in
@@ -229,15 +229,15 @@ final class EditorViewModel {
             let sourcePath = source.url.resolvingSymlinksInPath().standardizedFileURL.path
             let destinationPath = destination.resolvingSymlinksInPath().standardizedFileURL.path
             guard sourcePath.caseInsensitiveCompare(destinationPath) != .orderedSame else {
-                errorMessage = "导出文件与原图路径相同。请选择其他导出目录，以保留原始图片。"
+                errorMessage = String(localized: "The export path is the same as the original image. Choose another export folder to preserve the original.")
                 return
             }
             if FileManager.default.fileExists(atPath: destination.path) {
                 let alert = NSAlert()
-                alert.messageText = "替换已有文件？"
+                alert.messageText = String(localized: "Replace Existing File?")
                 alert.informativeText = destination.lastPathComponent
-                alert.addButton(withTitle: "替换")
-                alert.addButton(withTitle: "取消")
+                alert.addButton(withTitle: String(localized: "Replace"))
+                alert.addButton(withTitle: String(localized: "Cancel"))
                 guard let window = NSApp.keyWindow else { return }
                 // Capture this exact document and settings before presenting the sheet.
                 let width = settings.outputWidth, height = settings.outputHeight
@@ -254,7 +254,7 @@ final class EditorViewModel {
             }
         } catch {
             settings.directoryBookmark = nil
-            errorMessage = "无法访问上次的导出目录，请重新选择。\n\(error.localizedDescription)"
+            errorMessage = String(localized: "Unable to access the previous export folder. Choose it again.\n\(error.localizedDescription)")
         }
     }
 
@@ -262,7 +262,7 @@ final class EditorViewModel {
                              width: Int, height: Int, format: ExportFormat, quality: Double) {
         guard !isExporting else { return }
         isExporting = true
-        status = "正在导出 \(destination.lastPathComponent)"
+        status = String(localized: "Exporting \(destination.lastPathComponent)")
         exportTask = Task { [weak self] in
             let accessed = directory.startAccessingSecurityScopedResource()
             defer { if accessed { directory.stopAccessingSecurityScopedResource() } }
@@ -274,13 +274,13 @@ final class EditorViewModel {
                 isExporting = false
                 if self.source?.id == source.id {
                     exportedURL = destination
-                    status = "已导出 \(destination.lastPathComponent)"
+                    status = String(localized: "Exported \(destination.lastPathComponent)")
                 }
             } catch is CancellationError {
                 self?.isExporting = false
             } catch {
                 self?.isExporting = false
-                self?.status = "导出失败"
+                self?.status = String(localized: "Export Failed")
                 self?.errorMessage = error.localizedDescription
             }
         }

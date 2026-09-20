@@ -23,8 +23,9 @@ nonisolated enum ExportFormat: String, CaseIterable, Identifiable, Sendable {
 }
 
 nonisolated enum AspectPreset: String, CaseIterable, Identifiable, Sendable {
-    case square = "1:1", widescreen = "16:9", standard = "4:3", photo = "3:2", portrait = "4:5", custom = "自定义"
+    case square = "1:1", widescreen = "16:9", standard = "4:3", photo = "3:2", portrait = "4:5", custom = "custom"
     var id: String { rawValue }
+    var title: String { self == .custom ? String(localized: "Custom") : rawValue }
     var components: (Double, Double)? {
         switch self {
         case .square: (1, 1)
@@ -59,7 +60,9 @@ final class EditorSettings {
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         let values = defaults.dictionary(forKey: "editor.settings") ?? [:]
-        preset = AspectPreset(rawValue: values["preset"] as? String ?? "") ?? .square
+        let savedPreset = values["preset"] as? String ?? ""
+        // Migrate the legacy localized identifier while keeping display text separate.
+        preset = savedPreset == "\u{81EA}\u{5B9A}\u{4E49}" ? .custom : (AspectPreset(rawValue: savedPreset) ?? .square)
         let width = values["ratioWidth"] as? Double ?? 1
         let height = values["ratioHeight"] as? Double ?? 1
         ratioWidth = width.isFinite ? min(1000, max(1, width)) : 1

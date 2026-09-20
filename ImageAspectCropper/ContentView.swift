@@ -16,7 +16,7 @@ struct ContentView: View {
                             Image(systemName: "photo.on.rectangle.angled")
                                 .font(.system(size: 46, weight: .ultraLight))
                                 .foregroundStyle(.white.opacity(0.5))
-                            Button("打开图片", systemImage: "folder") { model.openImage() }
+                            Button("Open Image", systemImage: "folder") { model.openImage() }
                                 .controlSize(.large)
                                 .buttonStyle(.borderedProminent)
                         }
@@ -52,8 +52,8 @@ struct ContentView: View {
         .toolbar { editorToolbar }
         .navigationTitle(model.source?.url.lastPathComponent ?? "Image Aspect Cropper")
         .onAppear { model.undoManager = undoManager }
-        .alert("无法完成操作", isPresented: Binding(get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
-            Button("好", role: .cancel) { model.errorMessage = nil }
+        .alert("Unable to Complete Operation", isPresented: Binding(get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
+            Button("OK", role: .cancel) { model.errorMessage = nil }
         } message: {
             Text(model.errorMessage ?? "")
         }
@@ -71,7 +71,7 @@ struct ContentView: View {
                     Text(model.status).lineLimit(1).truncationMode(.middle)
                 }
             } else {
-                Text("未打开图片")
+                Text("No Image Open")
             }
             Spacer(minLength: 8)
             if let url = model.exportedURL {
@@ -79,7 +79,7 @@ struct ContentView: View {
                     Image(systemName: "folder")
                 }
                 .buttonStyle(.plain)
-                .help("在 Finder 中显示导出的图片")
+                .help("Show Exported Image in Finder")
             }
             Text(model.source == nil ? "" : "\(Int((model.zoom * 100).rounded()))%")
                 .monospacedDigit().frame(width: 48, alignment: .trailing)
@@ -93,28 +93,28 @@ struct ContentView: View {
 
     @ToolbarContentBuilder private var editorToolbar: some ToolbarContent {
         ToolbarItem(placement: .navigation) {
-            Button("打开图片", systemImage: "folder") { model.openImage() }
-                .help("打开图片 (⌘O)")
+            Button("Open Image", systemImage: "folder") { model.openImage() }
+                .help("Open Image (⌘O)")
         }
         ToolbarItemGroup(placement: .principal) {
-            Picker("工具", selection: $model.tool) {
-                Image(systemName: "crop").tag(CanvasTool.crop).help("选区")
-                Image(systemName: "hand.draw").tag(CanvasTool.pan).help("平移")
+            Picker("Tools", selection: $model.tool) {
+                Image(systemName: "crop").tag(CanvasTool.crop).help("Selection")
+                Image(systemName: "hand.draw").tag(CanvasTool.pan).help("Pan")
             }
             .pickerStyle(.segmented).frame(width: 82)
             .disabled(model.source == nil || model.confirmedCrop != nil)
             Toggle(isOn: Binding(get: { model.settings.showsGrid }, set: { model.settings.showsGrid = $0 })) {
-                Label("构图网格", systemImage: "grid")
+                Label("Composition Grid", systemImage: "grid")
             }
             .toggleStyle(.button)
-            .help("显示构图网格")
+            .help("Show Composition Grid")
             .disabled(model.confirmedCrop != nil)
         }
         ToolbarItemGroup(placement: .automatic) {
-            Button("缩小", systemImage: "minus.magnifyingglass") { model.setZoom(model.zoom / 1.25) }
-                .help("缩小 (⌘−)").disabled(model.source == nil)
+            Button("Zoom Out", systemImage: "minus.magnifyingglass") { model.setZoom(model.zoom / 1.25) }
+                .help("Zoom Out (⌘−)").disabled(model.source == nil)
             Menu {
-                Button("适合窗口") { model.fit() }
+                Button("Fit to Window") { model.fit() }
                 ForEach([25, 50, 100, 200, 400], id: \.self) { value in
                     Button("\(value)%") { model.setZoom(Double(value) / 100) }
                 }
@@ -122,16 +122,16 @@ struct ContentView: View {
                 Text("\(Int((model.zoom * 100).rounded()))%")
                     .monospacedDigit().frame(width: 48)
             }
-            .help("缩放比例").disabled(model.source == nil)
-            Button("放大", systemImage: "plus.magnifyingglass") { model.setZoom(model.zoom * 1.25) }
-                .help("放大 (⌘+)").disabled(model.source == nil)
-            Button("适合窗口", systemImage: "arrow.up.left.and.arrow.down.right") { model.fit() }
-                .help("适合窗口 (⌘0)").disabled(model.source == nil)
+            .help("Zoom Level").disabled(model.source == nil)
+            Button("Zoom In", systemImage: "plus.magnifyingglass") { model.setZoom(model.zoom * 1.25) }
+                .help("Zoom In (⌘+)").disabled(model.source == nil)
+            Button("Fit to Window", systemImage: "arrow.up.left.and.arrow.down.right") { model.fit() }
+                .help("Fit to Window (⌘0)").disabled(model.source == nil)
         }
         ToolbarItem(placement: .primaryAction) {
-            Button("导出", systemImage: "square.and.arrow.up") { model.export() }
+            Button("Export", systemImage: "square.and.arrow.up") { model.export() }
                 .disabled(!model.canExport)
-                .help("导出图片 (⇧⌘E)")
+                .help("Export Image (⇧⌘E)")
         }
     }
 }

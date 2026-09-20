@@ -13,11 +13,11 @@ nonisolated enum ImageProcessingError: LocalizedError {
     case unreadable, tooLarge, invalidCrop, unsupportedFormat, encodingFailed
     var errorDescription: String? {
         switch self {
-        case .unreadable: "无法读取这张图片，请选择有效的图片文件。"
-        case .tooLarge: "图片尺寸过大。请使用不超过 1 亿像素、边长不超过 32,768 像素的图片。"
-        case .invalidCrop: "选区或输出尺寸无效。"
-        case .unsupportedFormat: "当前系统不支持所选格式的编码，请选择其他格式。"
-        case .encodingFailed: "图片编码失败，请尝试其他格式或较小的输出尺寸。"
+        case .unreadable: String(localized: "Unable to read this image. Choose a valid image file.")
+        case .tooLarge: String(localized: "This image is too large. Use an image with no more than 100 million pixels and no side longer than 32,768 pixels.")
+        case .invalidCrop: String(localized: "The selection or output dimensions are invalid.")
+        case .unsupportedFormat: String(localized: "This system cannot encode the selected format. Choose another format.")
+        case .encodingFailed: String(localized: "Image encoding failed. Try another format or smaller output dimensions.")
         }
     }
 }

@@ -39,7 +39,7 @@ final class CropCanvasView: NSView {
         self.model = model
         super.init(frame: .zero)
         setAccessibilityElement(true)
-        setAccessibilityLabel("图片裁剪画布")
+        setAccessibilityLabel(String(localized: "Image Cropping Canvas"))
         setAccessibilityRole(.image)
     }
 
