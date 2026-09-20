@@ -1,4 +1,4 @@
-# Image Aspect Cropper
+# RatioCrop
 
 A native macOS image cropping app built with SwiftUI, MVVM, and `@Observable`. Requires macOS 14.6 or later, uses Swift 6, and has no third-party dependencies.
 
@@ -43,29 +43,6 @@ At 100% AVIF quality, the encoder receives a value of 0.99 because the system en
 Choose an output folder on the first export. Subsequent exports write directly to that authorized folder, with access persisted through a security-scoped bookmark. Output files keep the original filename stem and use the extension for the selected format. Replacing an existing output requires confirmation; overwriting the original image at its source path is blocked. Files are written using atomic replacement.
 
 Imports are limited to 100 million pixels and 32,768 pixels per side. Exports are limited to 100 million pixels and 16,384 pixels per side. For multi-frame images, only the first frame is imported, and exports are static images. Custom aspect-ratio components accept decimal values from 1 to 1,000.
-
-## Automated DMG Releases
-
-With `.github/workflows/release.yml` and `scripts/build-dmg.sh` committed, pushing any tag to GitHub builds a universal app (arm64 + x86_64) in the Release configuration, packages it as a DMG, and creates a GitHub Release named after the tag. Release notes are generated automatically, and the DMG and its SHA-256 checksum are uploaded as assets. Rerunning the workflow for the same tag updates the existing release assets.
-
-```sh
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-- The tag determines the release name and asset identifier. The Xcode app target remains the source of truth for the app version (`MARKETING_VERSION` / `CURRENT_PROJECT_VERSION`), minimum macOS version, and entitlements. Update the app version in the project before releasing; the tag does not override it.
-- The workflow selects the GitHub Actions `xcode-27` runner to match the project's Xcode 27 format.
-- The workflow uses the automatically provided `GITHUB_TOKEN` with `contents: write` permission. No additional GitHub token or Apple certificate is required.
-- The app is ad-hoc signed and retains its sandbox entitlements. It is not Developer ID signed or notarized by Apple. macOS Gatekeeper may block the first launch after download; allow it in **System Settings → Privacy & Security** if needed.
-- The DMG contains `RatioCrop.app` and an `Applications` shortcut for drag-and-drop installation. A failed build does not create a new release.
-
-To run the same packaging process locally with Xcode 27, without running tests:
-
-```sh
-bash scripts/build-dmg.sh v1.0.0
-```
-
-The output is `dist/RatioCrop-v1.0.0-universal.dmg` and its accompanying `.sha256` file. The `dist/` directory is ignored by Git.
 
 ## Build and Validation
 
